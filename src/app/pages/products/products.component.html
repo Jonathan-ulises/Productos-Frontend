@@ -1,0 +1,70 @@
+<div class="bg-light rounded-4 p-4 shadow-sm">
+  <form class="row g-3 align-items-end mb-1">
+    <div class="col-md-5">
+      <label for="txtClave" class="form-label">Clave</label>
+      <input type="text" id="txtClave" class="form-control" name="txtClave" [(ngModel)]="keySearch">
+    </div>
+    <div class="col-md-5">
+      <label for="slcTipoProducto" class="form-label">Tipo de Producto</label>
+      <select id="slcTipoProducto" class="form-select" name="slcTipoProducto" [(ngModel)]="typeProductIdSearch">
+        <option *ngFor="let type of listTypeProduct" [value]="type.idTypeProduct">{{ type.typeProductName }}</option>
+      </select>
+    </div>
+    <div class="col-2">
+      <button
+        (click)="search()"
+        type="button"
+        class="btn btn-dark w-100">
+          <i class="bi bi-search me-3"></i>
+          <span>Buscar</span>
+      </button>
+    </div>
+  </form>
+  <div class="row justify-content-end mb-5">
+    <div class="col-2">
+      <button (click)="clearSearch()" type="button" class="btn btn-secondary w-100">Limpiar busqueda</button>
+    </div>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+        <tr class="table-secondary text-center">
+          <th>Producto</th>
+          <th>Clave</th>
+          <th>Precio</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of listProducts">
+          <td>{{ product.productName }}</td>
+          <td>{{ product.key }}</td>
+          <td>${{ product.price }}</td>
+          <td>
+            <button
+              (click)="toEditProductPage(product)"
+              type="button"
+              class="btn btn-secondary mx-2"><i class="bi bi-pencil-square"></i>
+            </button>
+            <button
+              (click)="toEliminateProduct(product)"
+              type="button"
+              class="btn btn-secondary mx-2"><i class="bi bi-trash-fill"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <div class="d-grid">
+    <button
+      (click)="toSaveProductPage()"
+      type="button"
+      class="btn btn-dark">
+        <i i class="bi bi-plus-lg me-3"></i><span>Agregar</span>
+    </button>
+  </div>
+</div>

@@ -1,0 +1,125 @@
+<div class="bg-light rounded-4 p-4 shadow-sm">
+  <form [formGroup]="formProduct">
+    <div class="row g-3 justify-content-center">
+      <div class="col-md-5">
+        <label for="txtClave" class="form-label">Clave</label>
+        <input formControlName="productKey" type="text" id="txtClave" class="form-control">
+      </div>
+
+      <div class="col-md-5">
+        <label for="txtClave" class="form-label">Nombre</label>
+        <input formControlName="productName" type="text" id="txtClave" class="form-control">
+      </div>
+    </div>
+    <div class="row justify-content-center align-items-end">
+      <div class="col-md-4">
+        <label for="slcTipoProducto" class="form-label">Tipo de Producto</label>
+        <select formControlName="typeProduct" id="slcTipoProducto" class="form-select">
+          <option *ngFor="let type of listTypeProduct" [ngValue]="type">{{ type.typeProductName }}</option>
+        </select>
+      </div>
+      <div class="col-md-3">
+        <label for="txtPrecio" class="form-label">Precio</label>
+        <input formControlName="price" type="number" id="txtPrecio" class="form-control">
+      </div>
+      <div class="col-md-3">
+        <div class="form-check">
+          <input formControlName="productStatus" class="form-check-input" type="checkbox" id="ckbEsActivo" checked>
+          <label class="form-check-label" for="ckbEsActivo">
+            Es activo
+          </label>
+        </div>
+      </div>
+
+    </div>
+  </form>
+
+  <div class="row justify-content-center mt-5">
+    <div class="col-md-10">
+      <table class="table">
+        <thead>
+          <tr class="table-secondary">
+            <th>Proveedor</th>
+            <th>Clave Producto</th>
+            <th>Costo</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let supplierProduct of listSupplierProduct">
+            <td>{{ supplierProduct.supplierName }}</td>
+            <td>{{ supplierProduct.supplierProductKey }}</td>
+            <td>{{ supplierProduct.supplierCost }}</td>
+            <td>
+              <button
+                (click)="loadSupplierProductToEdit(supplierProduct)"
+                type="button"
+                class="btn btn-secondary mx-2"
+                data-bs-toggle="modal"
+                data-bs-target="#agregarProveedorModal"><i class="bi bi-pencil-square"></i></button>
+              <button
+                (click)="removeSupplierProduct(supplierProduct)"
+                type="button"
+                class="btn btn-secondary mx-2"><i class="bi bi-trash-fill"></i></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="row justify-content-end">
+        <div class="col-md-2">
+          <button
+            (click)="resetSupplierProductForm()"
+            type="button"
+            class="btn btn-secondary"
+            data-bs-toggle="modal"
+            data-bs-target="#agregarProveedorModal">Agregar Provedor</button>
+          </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row justify-content-center mt-5">
+    <div class="col-md-5">
+      <button (click)="cancel()" type="button" class="btn btn-secondary w-100">Cancelar</button>
+    </div>
+    <div class="col-md-5">
+      <button (click)="buttonProcessText === 'Guardar' ?  saveProduct() : editProduct()" type="button" class="btn btn-dark w-100">{{ buttonProcessText }}</button>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="agregarProveedorModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-dark text-white">
+        <h1 class="modal-title fs-5">Agregar Proveedor</h1>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="formSupplier">
+          <div class="mb-3">
+            <label for="slcProveedor" class="form-label">Proveedor</label>
+            <select formControlName="supplier" id="slcProveedor" class="form-select">
+              <option *ngFor="let supplier of listSupplier" [ngValue]="supplier">{{ supplier.supplierName }}</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="txtClave" class="form-label">Clave</label>
+            <input formControlName="productKey" type="text" id="txtClave" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label for="txtCosto" class="form-label">Costo</label>
+            <input formControlName="cost" type="number" id="txtCosto" class="form-control">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button (click)="resetSupplierProductForm()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button (click)="isEditionSupplier ? editSupplierProductToEdit() : addSupplierToProduct()" type="button" class="btn btn-dark" data-bs-dismiss="modal">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
